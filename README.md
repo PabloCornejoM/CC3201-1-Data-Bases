@@ -5,8 +5,7 @@ Project of the CC3201 Data Bases.
 Project of the CC3201 Data Bases course about learning how to do Postgres SQL consults. 
 Worked in 5 milestones with a database of Major League Baseball. 
 
-Milestone 0: Database + problem
-#
+Milestone 0: Database + problem \\
 Milestone 1: Entity relationship model
 
 Milestone 2: Relationship implementation
