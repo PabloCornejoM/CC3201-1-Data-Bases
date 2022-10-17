@@ -1,0 +1,115 @@
+CREATE SCHEMA MLB;
+
+CREATE TABLE MLB.games(
+	g_id int,
+	attendance int,
+	elapsed_time int,
+	away_final_score int,
+	away_team varchar,
+	home_final_score int,
+	home_team varchar,
+	start_time varchar,
+	umpire_1B varchar,
+	umpire_2B varchar,
+	umpire_3B varchar,
+	umpire_HB varchar,
+	weather varchar,
+	wind varchar,
+	delay int,
+	PRIMARY KEY (g_id)
+);
+
+CREATE TABLE MLB.atbats(
+	ab_id int,
+	batter_id int,
+	event varchar,
+	g_id int,
+	inning int,
+	o int,
+	p_score int,
+	p_throws varchar,
+	pitcher_id int,
+	stand varchar,
+	top bool,
+	PRIMARY KEY (ab_id, g_id),
+	FOREIGN KEY (g_id) REFERENCES MLB.games(g_id)
+);
+
+CREATE TABLE MLB.Pitches(
+g_id int,
+ab_id int,
+pitch_num int,
+start_speed float,
+end_speed float,
+spin_rate float,
+spin_dir float,
+type varchar,
+b_score int,
+b_count int, 
+s_count int, 
+outs int,
+PRIMARY KEY (ab_id, g_id, pitch_num),
+FOREIGN KEY (ab_id, g_id) REFERENCES MLB.atbats(ab_id,g_id)
+);
+
+
+CREATE TABLE MLB.Player_Names(
+	
+	id int, 	
+name varchar, 
+team varchar,
+year int, 
+war float, 
+sal int, 
+exp int,
+PRIMARY KEY (id,year,team)
+);
+	
+CREATE TABLE MLB.ejections(
+	ab_id int,
+	g_id int,
+	id int,
+year int,
+team varchar,
+	is_home_team bool,
+	des varchar,
+	PRIMARY KEY (ab_id, g_id, id, year, team),
+	FOREIGN KEY (ab_id, g_id) REFERENCES MLB.atbats(ab_id,g_id),
+	FOREIGN KEY (id,year,team) REFERENCES MLB.Player_Names(id,year,team)
+);	
+	
+CREATE TABLE MLB.participa(
+	g_id int,
+	id int,
+	year int,
+	team varchar,
+	PRIMARY KEY (g_id, id, year, team),
+	FOREIGN KEY (g_id) REFERENCES MLB.games(g_id),
+	FOREIGN KEY (id,year,team) REFERENCES MLB.Player_Names(id,year,team)
+);		
+
+CREATE TABLE MLB.batea(
+	id int,
+	year int,
+	team varchar,
+	ab_id int,
+	g_id int,
+	PRIMARY KEY (id, ab_id, g_id, year, team),
+	FOREIGN KEY (ab_id, g_id) REFERENCES MLB.atbats(ab_id,g_id),
+	FOREIGN KEY (id, year, team) REFERENCES MLB.Player_Names(id, year, team)
+);
+
+CREATE TABLE MLB.lanza(
+	id int,
+	year int,
+	team varchar,
+	pitch_num int,
+	ab_id int,
+	g_id int,
+	PRIMARY KEY (id, year, team, pitch_num, ab_id, g_id),
+	FOREIGN KEY (pitch_num,ab_id, g_id) REFERENCES MLB.pitches(pitch_num, ab_id,g_id),
+	FOREIGN KEY (id, year, team) REFERENCES MLB.Player_Names(id, year, team)
+);
+
+
+COPY batea TO 'C:\Users\pablo\Desktop\MLB_batea.csv' DELIMITER ',' CSV HEADER;
