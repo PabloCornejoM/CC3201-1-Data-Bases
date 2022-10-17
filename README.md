@@ -6,9 +6,13 @@ Project of the CC3201 Data Bases course about learning how to do Postgres SQL co
 Worked in 5 milestones with a database of Major League Baseball. 
 
 Milestone 0: Database + problem
+
 Milestone 1: Entity relationship model
+
 Milestone 2: Relationship implementation
+
 Milestone 3: Data upload 
+
 Milestone 4: Final assignment
 
 Data obtained from: 
